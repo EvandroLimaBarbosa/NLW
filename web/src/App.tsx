@@ -3,13 +3,12 @@ import logoImg from "./assets/logo-nwl-esports.svg";
 
 function App() {
   return (
-
     // Layout
 
     <div className="max-w-[1344px] mx-auto flex flex-col items-center my-20 ">
       <img src={logoImg} alt=""></img>
 
-      <h1 className="text-6xl font-black text-white my-20">
+      <h1 className="text-6xl font-black text-white mt-20">
         Seu{" "}
         <span className="text-transparent bg-nlw-gradient bg-clip-text">
           duo
@@ -19,9 +18,8 @@ function App() {
 
       {/* Area dos jogos */}
 
-      <div className="grid grid-cols-6 gap-6 mt-4">
+      <div className="grid grid-cols-6 gap-6 mt-16">
         <a href="" className="relative rounded-lg overflow-hidden">
-
           <img src="./game-1.png" alt="" />
 
           <div className="w-full pt-16 pb-4 px-4 bg-game-gradient absolute bottom-0 left-0 right-0">
@@ -77,11 +75,18 @@ function App() {
         </a>
       </div>
 
-      <div className="bg-[#2a2634] px-8 py-6 mt-8 self-stretch rounded-lg">
+      <div className="pt-1 bg-nlw-gradient self-stretch rounded-lg overflow-hidden mt-8">
+        <div className="bg-[#2a2634] px-8 py-6 flex justify-between items-center">
+          <div>
+            <strong className="text-2xl text-white font-black block">Não encontrou seu duo?</strong>
+          <span className="text-zinc-400 block">Publique um anúncio para encontrar novos players!</span>
+          </div>
 
+          <button className="py-3 px-4 bg-violet-500 hover:bg-violet-600 text-white rounded">
+          Publicar anúncio
+          </button>
+        </div>
       </div>
-
-
     </div>
   );
 }
