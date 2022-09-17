@@ -13,7 +13,7 @@ export function Home() {
     <View style={styles.container}>
       <Image source={logoImg} style={styles.logo} />
 
-      <Headingv 
+      <Heading
         title="Encontre seu duo!"
         subtitle="Selecione o game que deseja jogar..."
       />
