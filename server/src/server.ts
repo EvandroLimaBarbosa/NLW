@@ -1,6 +1,8 @@
 import express, { request, response } from "express";
+import { PrismaClient } from "@prisma/client";
 
 const app = express();
+const prisma = new PrismaClient();
 
 // primeiro entre na pasta server e
 // depois digite no terminal
@@ -9,14 +11,13 @@ const app = express();
 // colocar no hoppscotch
 // localhost:3333/ads
 
-app.get('/games', (request, response) => {
+app.get("/games", (request, response) => {
   return response.json([]);
 });
 
-app.post('/ads', (request, response) => {
-  return response.status(201).json(['']);
+app.post("/ads", (request, response) => {
+  return response.status(201).json([""]);
 });
-
 
 app.get("/games/:id/ads", (request, response) => {
   //const gameId = request.params.id;
@@ -33,8 +34,7 @@ app.get("/games/:id/ads", (request, response) => {
 app.get("/ads/:id/discord", (request, response) => {
   //const adId = request.params.id;
 
-  return response.json([
-  ]);
+  return response.json([]);
 });
 
 app.listen(3333);
