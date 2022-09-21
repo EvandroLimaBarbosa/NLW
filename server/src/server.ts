@@ -1,9 +1,16 @@
 import express, { request, response } from "express";
+import * as bodyParser from "body-parser"
 import { PrismaClient } from "@prisma/client";
 
 const app = express();
 
 app.use(express.json());
+
+
+app.post('/teste', function (req, res) {
+  res.send(req.body)
+})
+
 
 const prisma = new PrismaClient({
   log: ["query"]
@@ -33,11 +40,14 @@ app.get("/games", async (request, response) => {
 ///// POST
 
 app.post('/games/:id/ads', (request, response) => {
-  const gameId = request.params.id;
-  const body = request.body;
+    const gameId = request.params.id;
+    const body = request.body;
 
-  return response.status(201).json(body);
-});
+    return response.status(201).json(body);
+  });
+
+
+  
 
 app.get("/games/:id/ads", async (request, response) => {
   const gameId = request.params.id;
