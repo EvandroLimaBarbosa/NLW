@@ -1,5 +1,4 @@
 import express, { request, response } from "express";
-import * as bodyParser from "body-parser"
 import { PrismaClient } from "@prisma/client";
 
 const app = express();
