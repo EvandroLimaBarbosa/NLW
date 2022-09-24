@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json());
 
 const prisma = new PrismaClient({
-  log: ["query"]
+  log: ["query"],
 });
 
 // primeiro entre na pasta server e
@@ -34,7 +34,7 @@ app.get("/games", async (request, response) => {
 //  *----- POST -----* //
 
 app.post("/games/:id/ads", async (request, response) => {
-  const gameId: any = request.params.id;
+  const gameId = request.params.id; 
   const body: any = request.body;
 
   const ad = await prisma.ad.create({
@@ -43,14 +43,12 @@ app.post("/games/:id/ads", async (request, response) => {
       name: body.name,
       yearsPlaying: body.yearsPlaying,
       discord: body.discord,
-      weekDays: body.weekDays.join(","), 
-      hourStart: body.hourStart,
-      hourEnd:body.hourEnd,
+      weekDays: body.weekDays.join(','),
+      hourStart: convertHourStringToMinutes(body.hourStart),
+      hourEnd: convertHourStringToMinutes(body.hourEnd),
       useVoiceChannel: body.useVoiceChannel,
-    }
+    },
   });
-
-  // return response.send(console.log(ad.hourEnd))
 
   return response.status(201).json(ad);
 });
@@ -104,3 +102,11 @@ app.get("/ads/:id/discord", async (request, response) => {
 });
 
 app.listen(3333);
+
+
+// -------teste------
+app.post("/teste", (req, res) => {
+  const teste = "08:50"
+
+  return res.json(console.log(convertHourStringToMinutes(teste)));
+});
