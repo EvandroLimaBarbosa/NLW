@@ -1,18 +1,13 @@
-import express, { request, response } from "express";
+import express from "express";
 import { PrismaClient } from "@prisma/client";
+import { convertHourStringToMinutes } from "./utils/convert-hour-string-to-minutes";
 
 const app = express();
 
 app.use(express.json());
 
-
-app.post('/teste', function (req, res) {
-  res.send(req.body)
-})
-
-
 const prisma = new PrismaClient({
-  log: ["query"]
+  log: ["query"],
 });
 
 // primeiro entre na pasta server e
@@ -36,17 +31,27 @@ app.get("/games", async (request, response) => {
   return response.json(games);
 });
 
-///// POST
+//  *----- POST -----* //
 
-app.post('/games/:id/ads', (request, response) => {
-    const gameId = request.params.id;
-    const body = request.body;
+app.post("/games/:id/ads", async (request, response) => {
+  const gameId = request.params.id; 
+  const body: any = request.body;
 
-    return response.status(201).json(body);
+  const ad = await prisma.ad.create({
+    data: {
+      gameId,
+      name: body.name,
+      yearsPlaying: body.yearsPlaying,
+      discord: body.discord,
+      weekDays: body.weekDays.join(','),
+      hourStart: convertHourStringToMinutes(body.hourStart),
+      hourEnd: convertHourStringToMinutes(body.hourEnd),
+      useVoiceChannel: body.useVoiceChannel,
+    },
   });
 
-
-  
+  return response.status(201).json(ad);
+});
 
 app.get("/games/:id/ads", async (request, response) => {
   const gameId = request.params.id;
@@ -97,3 +102,11 @@ app.get("/ads/:id/discord", async (request, response) => {
 });
 
 app.listen(3333);
+
+
+// -------teste------
+app.post("/teste", (req, res) => {
+  const teste = "08:50"
+
+  return res.json(console.log(convertHourStringToMinutes(teste)));
+});
