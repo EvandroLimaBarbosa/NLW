@@ -36,6 +36,7 @@ export function Home() {
           title="Encontre seu duo!"
           subtitle="Selecione o game que deseja jogar..."
         />
+        
 
         <FlatList
           data={games}

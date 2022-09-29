@@ -12,6 +12,7 @@ import { GameParams } from "../../@types/navigation";
 
 import { Heading } from "../../components/Heading";
 import { Background } from "../../components/Background";
+import { DuoCard } from "../../components/DuoCard";
 
 export function Game() {
   const navigation = useNavigation();
@@ -43,6 +44,8 @@ export function Game() {
         resizeMode="cover"/>
 
         <Heading title={game.title} subtitle="Conecte-se e comece a jogar!" />
+
+        <DuoCard/>
       </SafeAreaView>
     </Background>
   );
