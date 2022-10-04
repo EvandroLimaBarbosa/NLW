@@ -12,7 +12,11 @@ import { Heading } from "../../components/Heading";
 
 import { styles } from "./styles";
 
+export const Ip = "192.168.43.68"  // <-------- COLOQUE SEU IP AQUI 
+
 export function Home() {
+  
+
   const [games, setGames] = useState<GameCardProps[]>([]);
 
   const navigation = useNavigation();
@@ -22,7 +26,8 @@ export function Home() {
   }
 
   useEffect(() => {
-    fetch("http://192.168.100.159:3333/games")
+    fetch(`http://${Ip}:3333/games`)
+    // fetch("http://192.168.100.159:3333/games")  -- exemplo de como fica a url
       .then((response) => response.json())
       .then((data) => setGames(data));
   }, []);

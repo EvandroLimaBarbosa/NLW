@@ -14,6 +14,7 @@ import { GameParams } from "../../@types/navigation";
 import { Heading } from "../../components/Heading";
 import { Background } from "../../components/Background";
 import { DuoCard, DuoCardProps } from "../../components/DuoCard";
+import { Ip } from "../Home";
 
 export function Game() {
   const [duos, setDuos] = useState<DuoCardProps[]>([])
@@ -23,7 +24,7 @@ export function Game() {
   const game = route.params as GameParams;
 
   useEffect(() => {
-    fetch(`http://192.168.100.159:3333/games/${game.id}/ads`)
+    fetch(`http://${Ip}:3333/games/${game.id}/ads`)
       .then((response) => response.json())
       .then((data) => setDuos(data));
   }, []);

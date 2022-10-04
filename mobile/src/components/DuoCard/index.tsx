@@ -22,7 +22,7 @@ export function DuoCard({data}: Props) {
     <View style={styles.container}>
       <Duoinfo label="Nome" value={data.name} />
       <Duoinfo label="Tempo de Jogo" value={`${data.yearsPlaying} anos`} />
-      <Duoinfo label="Disponibilidade" value={`${data.weekDays.length} dias`} />
+      <Duoinfo label="Disponibilidade" value={`${data.weekDays.length} dias`} /> 
       <Duoinfo label="Chamada de áudio?" value="Diego Fernandes" colorValue="red"/>
     </View>
   );
