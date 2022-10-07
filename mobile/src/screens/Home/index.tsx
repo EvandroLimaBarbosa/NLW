@@ -12,7 +12,7 @@ import { Heading } from "../../components/Heading";
 
 import { styles } from "./styles";
 
-export const Ip = "192.168.43.68"  // <-------- COLOQUE SEU IP AQUI 
+export const Ip = "192.168.100.159"  // <-------- COLOQUE SEU IP AQUI 
 
 export function Home() {
   

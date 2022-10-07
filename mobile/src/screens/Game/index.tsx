@@ -60,7 +60,13 @@ export function Game() {
         keyExtractor={item => item.id}
         renderItem={({item}) => (
           <DuoCard data={item}/>
-        )}/>
+        
+        )}
+        horizontal
+        contentContainerStyle={styles.contentList}
+        showsHorizontalScrollIndicator={false}
+        style={styles.containerList}
+        />
       </SafeAreaView>
     </Background>
   );
