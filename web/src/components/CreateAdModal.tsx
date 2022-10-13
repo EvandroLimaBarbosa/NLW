@@ -3,8 +3,29 @@ import Input from "./Form/Input";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as Checkbox from "@radix-ui/react-checkbox";
 import * as Select from "@radix-ui/react-select";
+import SelectItem from "./SelectItem";
+import { useEffect, useState } from "react";
+
+interface Game {
+  id: string;
+  title: string;
+  bannerUrl: string;
+  _count: {
+    ads: number;
+  };
+}
 
 export default function CreateAdModal() {
+  const [games, setGames] = useState<Game[]>([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3333/games")
+      .then((response) => response.json())
+      .then((data) => {
+        setGames(data);
+      });
+  }, []);
+
   return (
     <Dialog.Portal>
       <Dialog.Overlay className="bg-black/60 inset-0 fixed" />
@@ -22,11 +43,23 @@ export default function CreateAdModal() {
 
             <Select.Root>
               <Select.Trigger className="bg-zinc-900 py-3 px-4 rounded text-sm text-zinc-500 flex flex-row justify-between">
-                <Select.Value placeholder="Selecione o game que deseja jogar"/>
-                <CaretDown className="w-[15] h-[7.5]"/>
+                <Select.Value placeholder="Selecione o game que deseja jogar" />
+                <CaretDown className="w-6 h-6" />
               </Select.Trigger>
-            </Select.Root>
 
+              <Select.Portal className="text-white bg-zinc-900 rounded-md">
+                <Select.Content className="p-2">
+                  <Select.ScrollUpButton>
+                    <CaretDown className="w-6 h-6" />
+                  </Select.ScrollUpButton>
+                  <Select.Viewport>
+                    {games.map((game) => {
+                      return <SelectItem value={game.id} title={game.title} />;
+                    })}
+                  </Select.Viewport>
+                </Select.Content>
+              </Select.Portal>
+            </Select.Root>
           </div>
 
           <div className="flex flex-col gap-2">
