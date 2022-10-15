@@ -4,7 +4,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import * as Checkbox from "@radix-ui/react-checkbox";
 import * as Select from "@radix-ui/react-select";
 import SelectItem from "./SelectItem";
-import { useEffect, useState } from "react";
+import { useEffect, useState, FormEvent } from "react";
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
 
 interface Game {
@@ -14,6 +14,7 @@ interface Game {
 
 export default function CreateAdModal() {
   const [weekDays, setWeekDays] = useState<string[]>([]);
+  const [selectGame, setSelectGame] = useState<boolean>();
   const [games, setGames] = useState<Game[]>([]);
 
   useEffect(() => {
@@ -24,6 +25,18 @@ export default function CreateAdModal() {
       });
   }, []);
 
+  function teste() {
+    setSelectGame(true);
+  }
+
+  function handleCreateAd(event: FormEvent) {
+    event.preventDefault();
+
+    const formData = new FormData(event.target as HTMLFormElement);
+    const data = Object.fromEntries(formData);
+
+    console.log(data)
+  }
   return (
     <Dialog.Portal>
       <Dialog.Overlay className="bg-black/60 inset-0 fixed" />
@@ -33,14 +46,18 @@ export default function CreateAdModal() {
           Publique um anúncio
         </Dialog.Title>
 
-        <form className="mt-8 flex flex-col gap-4">
+        <form onSubmit={handleCreateAd} className="mt-8 flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <label htmlFor="game" className="font-semibold">
               Qual o game?
             </label>
 
-            <Select.Root>
-              <Select.Trigger className="bg-zinc-900 py-3 px-4 rounded text-sm text-zinc-500 flex flex-row justify-between ">
+            <Select.Root name="game" onValueChange={teste}>
+              <Select.Trigger
+                className={`bg-zinc-900 py-3 px-4 rounded text-sm flex flex-row justify-between ${
+                  selectGame ? "text-white" : "text-zinc-500"
+                }`}
+              >
                 <Select.Value placeholder="Selecione o game que deseja jogar" />
                 <CaretDown className="w-6 h-6" />
               </Select.Trigger>
@@ -65,21 +82,21 @@ export default function CreateAdModal() {
 
           <div className="flex flex-col gap-2">
             <label htmlFor="name">Seu nome ou (nick name)</label>
-            <Input id="name" placeholder="Como te chamam dentro do game?" />
+            <Input name="name" id="name" placeholder="Como te chamam dentro do game?" />
           </div>
 
           <div className="grid grid-cols-2 gap-6">
             <div className="flex flex-col gap-2">
               <label htmlFor="yearsPlaying ">Joga há quantos anos?</label>
               <Input
-                id="yearsPlaying"
+                name="yearsPlaying" id="yearsPlaying"
                 type="number"
                 placeholder="Tudo bem ser ZERO"
               />
             </div>
             <div className="flex flex-col gap-2">
               <label htmlFor="discord">Qual seu Discord?</label>
-              <Input id="discord" type="text" placeholder="Usuario#0000" />
+              <Input name="discord" id="discord" type="text" placeholder="Usuario#0000" />
             </div>
           </div>
 
@@ -161,8 +178,8 @@ export default function CreateAdModal() {
             <div className="flex flex-col gap-2 flex-1">
               <label htmlFor="hourStart">Qual horário do dia?</label>
               <div className="grid grid-cols-2 gap-1">
-                <Input id="hourStart" type="time" placeholder="De" />
-                <Input id="hourEnd" type="time" placeholder="Até" />
+                <Input name="hourStart"  id="hourStart" type="time" placeholder="De" />
+                <Input name="hourEnd" id="hourEnd" type="time" placeholder="Até" />
               </div>
             </div>
           </div>
