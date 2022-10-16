@@ -25,8 +25,14 @@ export default function CreateAdModal() {
     });
   }, []);
 
-  function onSelectGame(id: string) {
-    setSelectGame(id);
+  function onSelectGame(value: string) {
+    // assim que seleciona o jogo ele verifica qual id do jogo selecionado
+    for (let index: number = 0; index < games.length; index++) {
+      if (games[index].title === value) {
+        setSelectGame(games[index].id);
+        break;
+      }
+    }
   }
 
   async function handleCreateAd(event: FormEvent) {
@@ -35,22 +41,23 @@ export default function CreateAdModal() {
     const formData = new FormData(event.target as HTMLFormElement);
     const data = Object.fromEntries(formData);
 
-    console.log(data);
-
     if (!data.name) {
       return;
     }
 
     try {
-      await axios.post(`http://localhost:3333/games/d0eb8b16-8181-4157-8487-ef60c37ba339/ads`, {
-        name: data.name,
-        yearsPlaying: Number(data.yearsPlaying),
-        discord: data.discord,
-        weekDays: weekDays.map(Number),
-        hourStart: data.hourStart,
-        hourEnd: data.hourEnd,
-        useVoiceChannel: useVoiceChannel,
-      });
+      await axios.post(
+        `http://localhost:3333/games/${selectGame}/ads`,
+        {
+          name: data.name,
+          yearsPlaying: Number(data.yearsPlaying),
+          discord: data.discord,
+          weekDays: weekDays.map(Number),
+          hourStart: data.hourStart,
+          hourEnd: data.hourEnd,
+          useVoiceChannel: useVoiceChannel,
+        }
+      );
 
       alert("Anúncio criado com sucesso!");
     } catch (err) {
@@ -75,8 +82,7 @@ export default function CreateAdModal() {
 
             <Select.Root
               onValueChange={(value: string) => {
-                setSelectGame(value);
-                console.log(value);
+                onSelectGame(value);
               }}
             >
               <Select.Trigger
