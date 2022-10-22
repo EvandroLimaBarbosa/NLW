@@ -11,6 +11,7 @@ import "./styles/main.css";
 import logoImg from "./assets/logo-nwl-esports.svg";
 import CreateAdModal from "./components/CreateAdModal";
 import axios from "axios";
+
 interface Game {
   id: string;
   title: string;
@@ -22,7 +23,7 @@ interface Game {
 
 function App() {
   const [games, setGames] = useState<Game[]>([]);
-  const [lenghtBanners, setLenghtBanners] = useState(5);
+  const [lenghtBanners, setLenghtBanners] = useState(50);
   const [currentSlide, setCurrentSlide] = React.useState(0);
   const [loaded, setLoaded] = useState(false);
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
@@ -42,14 +43,28 @@ function App() {
   useEffect(() => {
     axios("http://localhost:3333/games").then((response) => {
       setGames(response.data);
-      setLenghtBanners(6);
+
+      //teste de responsividade
+      if (true) {
+        setLenghtBanners(6);
+      } else if (false) {
+        setLenghtBanners(5);
+      } else if (false) {
+        setLenghtBanners(4);
+      } else if (false) {
+        setLenghtBanners(3);
+      } else if (false) {
+        setLenghtBanners(2);
+      } else if (false) {
+        setLenghtBanners(1);
+      }
     });
   }, []);
 
   return (
     // Layout
 
-    <div className="max-w-[1344px] mx-auto flex flex-col justify-around items-center my-20 ">
+    <div className="max-w-[1344px] mx-auto px-5 flex flex-col justify-around items-center my-20 ">
       <img src={logoImg} alt=""></img>
 
       <h1 className="text-6xl font-black text-white mt-20">
@@ -62,10 +77,10 @@ function App() {
       </h1>
 
       {/* Area dos jogos */}
-      <div className="max-w-[1500px] relative">
+
       <div
+        className={`max-w-[1344px] h-[270px] mx-10 before:items-center navigation-wrapper keen-slider mt-16 relative block`}
         ref={sliderRef}
-        className={`max-w-[1344px] items-center navigation-wrapper keen-slider mt-16 relative block`}
       >
         {games.map((game) => {
           return (
@@ -77,7 +92,7 @@ function App() {
             />
           );
         })}
-      </div>
+        <div>
         {loaded && instanceRef.current && (
           <>
             <Arrow
@@ -92,15 +107,19 @@ function App() {
               onClick={(e: any) =>
                 e.stopPropagation() || instanceRef.current?.next()
               }
-              disabled={currentSlide === instanceRef.current.slides.length - lenghtBanners}
+              disabled={
+                currentSlide ===
+                instanceRef.current.slides.length - lenghtBanners
+              }
             />
           </>
         )}
+        </div>
       </div>
 
       <Dialog.Root>
-          <CreateAdBanner />
-          <CreateAdModal />
+        <CreateAdBanner />
+        <CreateAdModal />
       </Dialog.Root>
     </div>
   );
@@ -116,8 +135,8 @@ function Arrow(props: {
   return (
     <svg
       onClick={props.onClick}
-      className={`absolute w-10 h-10 arrow cursor-pointer ${
-        props.left ? " left-10" : " left-auto right-2"
+      className={`absolute shadow-md w-10 h-10 my-24 arrow cursor-pointer translate-y-1/2 ${
+        props.left ? " left-2" : " left-auto right-2"
       } ${disabeld}`}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
