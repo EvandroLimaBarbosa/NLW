@@ -11,17 +11,27 @@ import { styles } from "./styles";
 
 import { GameParams } from "../../@types/navigation";
 
-import { Heading } from "../../components/Heading";
-import { Background } from "../../components/Background";
 import { DuoCard, DuoCardProps } from "../../components/DuoCard";
+import { Background } from "../../components/Background";
+import { DuoMatch } from "../../components/DuoMatch";
+import { Heading } from "../../components/Heading";
 import { Ip } from "../Home";
 
 export function Game() {
-  const [duos, setDuos] = useState<DuoCardProps[]>([])
+  const [duos, setDuos] = useState<DuoCardProps[]>([]);
 
+  const [discordDuoSelected, setDiscordDuoSelected] = useState("");
   const navigation = useNavigation();
   const route = useRoute();
   const game = route.params as GameParams;
+
+  async function getDiscordUser(adsId: string) {
+    fetch(`http://${Ip}:3333/ads/${adsId}/discord`)
+      .then((response) => response.json())
+      .then((data) => {
+        setDiscordDuoSelected(data.discord);
+      });
+  }
 
   useEffect(() => {
     fetch(`http://${Ip}:3333/games/${game.id}/ads`)
@@ -49,29 +59,35 @@ export function Game() {
         </View>
 
         <Image
-        source={{uri: game.bannerUrl}}
-        style={styles.banner}
-        resizeMode="cover"/>
+          source={{ uri: game.bannerUrl }}
+          style={styles.banner}
+          resizeMode="cover"
+        />
 
         <Heading title={game.title} subtitle="Conecte-se e comece a jogar!" />
 
         <FlatList
-        data={duos}
-        keyExtractor={item => item.id}
-        renderItem={({item}) => (
-          <DuoCard data={item}
-          onConnect={() => {}}/>
-        
-        )}
-        horizontal
-        contentContainerStyle={[duos.length > 0 ? styles.contentList : styles.emptyListContent]}
-        showsHorizontalScrollIndicator={false}
-        style={styles.containerList}  
-        ListEmptyComponent={() => (
-          <Text style={styles.emptyListText}>
-            Não há anúncios publicados ainda.
-          </Text>
-        )}
+          data={duos}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <DuoCard data={item} onConnect={() => {getDiscordUser(item.id)}} />
+          )}
+          horizontal
+          contentContainerStyle={[
+            duos.length > 0 ? styles.contentList : styles.emptyListContent,
+          ]}
+          showsHorizontalScrollIndicator={false}
+          style={styles.containerList}
+          ListEmptyComponent={() => (
+            <Text style={styles.emptyListText}>
+              Não há anúncios publicados ainda.
+            </Text>
+          )}
+        />
+        <DuoMatch
+          visible={discordDuoSelected.length > 0}
+          discord={discordDuoSelected}
+          onClose={() => setDiscordDuoSelected("")}
         />
       </SafeAreaView>
     </Background>
