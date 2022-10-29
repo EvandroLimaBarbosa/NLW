@@ -6,9 +6,10 @@ import {
   Text,
   TouchableOpacity,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { CheckCircle } from "phosphor-react-native";
+import { Activity, CheckCircle } from "phosphor-react-native";
 import * as Clipboard from "expo-clipboard";
 
 import { styles } from "./styles";
@@ -27,10 +28,7 @@ export function DuoMatch({ discord, onClose, ...rest }: Props) {
     setIsCopping(true);
     await Clipboard.setStringAsync(discord);
 
-    Alert.alert(
-      "Discord Copiado!",
-      "Usuário copiado com sucesso!"
-    );
+    Alert.alert("Discord Copiado!", "Usuário copiado com sucesso!");
     setIsCopping(false);
   }
   return (
@@ -60,7 +58,9 @@ export function DuoMatch({ discord, onClose, ...rest }: Props) {
             onPress={handleCopyDiscordUserToClipboard}
             disabled={isCopping}
           >
-            <Text style={styles.discord}>{discord}</Text>
+            <Text style={styles.discord}>
+              {isCopping ? <ActivityIndicator color={THEME.COLORS.PRIMARY}/> : discord}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
