@@ -78,8 +78,18 @@ function App() {
 
       {/* Area dos jogos */}
 
+      <div className="z-10 self-start absolute">
+        <Arrow
+          left
+          onClick={(e: any) =>
+            e.stopPropagation() || instanceRef.current?.prev()
+          }
+          disabled={currentSlide === 0}
+        />
+      </div>
+
       <div
-        className={`max-w-[1344px] h-[270px] mx-10 before:items-center navigation-wrapper keen-slider mt-16 relative block`}
+        className={`max-w-[1344px] h-[270px] mx-15 before:items-center navigation-wrapper keen-slider mt-16 relative block`}
         ref={sliderRef}
       >
         {games.map((game) => {
@@ -92,17 +102,11 @@ function App() {
             />
           );
         })}
-        <div>
+      </div>
+
+      <div className="z-10 self-end absolute">
         {loaded && instanceRef.current && (
           <>
-            <Arrow
-              left
-              onClick={(e: any) =>
-                e.stopPropagation() || instanceRef.current?.prev()
-              }
-              disabled={currentSlide === 0}
-            />
-
             <Arrow
               onClick={(e: any) =>
                 e.stopPropagation() || instanceRef.current?.next()
@@ -114,7 +118,6 @@ function App() {
             />
           </>
         )}
-        </div>
       </div>
 
       <Dialog.Root>
@@ -136,7 +139,7 @@ function Arrow(props: {
     <svg
       onClick={props.onClick}
       className={`absolute shadow-md w-10 h-10 my-24 arrow cursor-pointer translate-y-1/2 ${
-        props.left ? " left-2" : " left-auto right-2"
+        props.left ? " -left-12" : " left-auto -right-12"
       } ${disabeld}`}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
