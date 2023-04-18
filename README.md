@@ -33,7 +33,8 @@ The project is called *Find your Duo*.
 It is a platform to find the perfect partner to play your favorite game together, by connecting your Twitch.tv account.
 
 <p align="center">
-<img src=![app-preview](https://user-images.githubusercontent.com/96010876/232863356-3c26419d-19d2-4921-ad69-27be7eab71c5.jpeg) alt="Next Level Week Esports Logo"/></p>
+<img src=![app-preview](https://user-images.githubusercontent.com/96010876/232863677-f0d56cd9-dc34-46eb-b141-fd6bdd876a46.jpeg)
+ alt="Next Level Week Esports Logo"/></p>
 
 ## Stack and tools
 * [Node.js](https://nodejs.org/en/)
